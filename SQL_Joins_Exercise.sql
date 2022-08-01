@@ -7,7 +7,8 @@ using the products table and the categories table, return the product name and t
  products.ProductID = reviews.ProductID WHERE Rating = 5;
 /* joins: find the employee with the most total quantity sold.  use the sum() function and group by */
 SELECT e.FirstName FName, e.LastName LName, sum(s.Quantity) QtySold FROM employees e
-INNER JOIN sales s ON e.EmployeeID = s.EmployeeID;  -- just trying out aliases to see if I have it figured out
+INNER JOIN sales s ON e.EmployeeID = s.EmployeeID GROUP BY e.EmployeeID
+ORDER BY sum(s.Quantity) DESC LIMIT 5; -- just trying out aliases to see if I have it figured out
 /* joins: find the name of the department, and the name of the category for Appliances and Games */
 SELECT d.Name DeptName, c.Name CatName FROM categories c INNER JOIN departments d ON d.DepartmentID = c.DepartmentID
 WHERE c.Name = "Appliances" OR c.Name = "Games";
@@ -27,8 +28,9 @@ This query should return:
 -  the name of each product
 -  and how many of that product they sold */
 SELECT e.employeeID EID, e.FirstName FN, e.LastName LN, p.Name Product, s.Quantity Qty, (s.PricePerUnit*s.Quantity) TtlSale FROM employees e INNER JOIN 
-sales s ON e.EmployeeID = s.EmployeeID INNER JOIN products p ON p.ProductID = s.ProductID ORDER BY FN ASC, Qty DESC
+sales s ON e.EmployeeID = s.EmployeeID INNER JOIN products p ON p.ProductID = s.ProductID ORDER BY FN ASC, Qty DESC;
 -- added total price of each product sold, logic that if it's sales report, possibly being used for review
 -- 10 sales of cheap items is less impressive than 2 cheap and 8 expensive. I also ordered them by first name, then by
--- quantity sold. If going through a review, you may or may not be looking at an alphabetical list, this would make it 
+-- quantity sold. If going through a review, you may or may not be looking at an alphabetical list, this would make it.
+-- grouping them any other way seems to only list most expensive items sold per employee versus all products sold per employee
 -- easier to get started
